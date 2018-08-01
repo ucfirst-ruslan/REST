@@ -3,7 +3,7 @@
 include_once '../libs/RestServer.php';
 
 $cars = new Cars;
-echo $cars;
+//echo $cars;
 
 class Cars
 {

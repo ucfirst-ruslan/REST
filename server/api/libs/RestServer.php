@@ -2,21 +2,46 @@
 
 class RestServer 
 {
+	private $method;
+	private $table;
+	private $param;
+	
 	public function __construct()
-    {
-		$this->getUrl();
+    {	
+		list($a, $b, $c, $d, $f, $j, $path) = explode('/', $_SERVER['REQUEST_URI'], 7);
+		list($this->table, $this->params) = explode('/', $path);
+		
+		$this->method = $_SERVER['REQUEST_METHOD'];
 	}
 	
-	public function getUrl()
+	
+	private function getMethod()
 	{
-		
-		//var_dump($_SERVER);
-		list($sl, $s, $a, $d, $db, $table, $path) = explode('/', $_SERVER['REQUEST_URI'], 7);
-		echo $s . "1<br>";
-		echo $a . "2<br>";
-		echo $d . "3<br>";
-		echo $db . "4<br>";
-		echo $table . "5<br>";
-		echo $path . "6<br>";
+		switch($this->method) 
+		{ 
+			case 'GET': 
+				$this->setMethod('get'.ucfirst($table), explode('/', $path)); 
+				break; 
+			case 'DELETE': 
+				$this->setMethod('delete'.ucfirst($table), explode('/', $path)); 
+				break; 
+			case 'POST': 
+				$this->setMethod('post'.ucfirst($table), explode('/', $path)); 
+				break; 
+			case 'PUT': 
+				$this->setMethod('put'.ucfirst($table), explode('/', $path)); 
+				break; 
+			default: 
+				return false; 
+		} 
 	}
+	
+	
+	private function setMethod($method, $param=false) 
+	{ 
+		if ( method_exists($this, $method) ) 
+		{ 
+			call_user_func(......); 
+		} 
+	} 
 }
